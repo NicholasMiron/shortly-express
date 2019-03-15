@@ -72,13 +72,25 @@ app.post('/links',
     .catch(link => {
       res.status(200).send(link);
     });
-});
+  });
+  
+  /************************************************************/
+  // Write your authentication routes here
+  /************************************************************/
+  
+  app.post('/signup', (req, res) => {
+    console.log(req.body)
+    let saltedBody = models.Users.create(req.body);
+    saltedBody.then(() => {
+      res.statusCode = 201;
+      res.send();
+    })
+  });
 
-/************************************************************/
-// Write your authentication routes here
-/************************************************************/
-
-
+  app.get('/signup', (req, res)=>{
+    res.render('signup')
+  });
+  
 
 /************************************************************/
 // Handle the code parameter route last - if all other routes fail
