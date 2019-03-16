@@ -1,12 +1,14 @@
 const parseCookies = (req, res, next) => {
-    console.log('i have a weiner', req);
 
-    if(req.headers.cookie){
-        let cookieNum = req.headers.cookie.slice(10)
-        req.cookies = { shortlyid: cookieNum };
+  if (req.headers.cookie) {
+    let splitCookies = req.headers.cookie.split(' ');
+    for (let cookie of splitCookies) {
+      let halfCookie = cookie.split('=');
+      halfCookie[1] = halfCookie[1].replace(/\;/gm, '');
+      req.cookies[halfCookie[0]] = halfCookie[1];
     }
-    console.log('we all have weiners', req.cookies)
-    next();
+  }
+  next();
 };
 
 module.exports = parseCookies;
